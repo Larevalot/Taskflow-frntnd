@@ -110,8 +110,12 @@ export function ProjectDetail() {
             ) : (
               <TaskBoard
                 tasks={tasks}
-                onCreateTask={createTask}
-                onUpdateTask={updateTask}
+                onCreateTask={async (data) => {
+                  await createTask(data);
+                }}
+                onUpdateTask={async (id, data) => {
+                  await updateTask(id, data as any);
+              }}
                 onDeleteTask={deleteTask}
               />
             )}
