@@ -1,12 +1,15 @@
 import axios from 'axios';
 import type { AuthResponse, User, Project, Task, TaskStatus, TaskPriority } from '../types';
 
+// Si existe VITE_API_URL en el entorno (Vercel), la usa como base absoluta.
+// Si no existe (local), mantiene tu fallback de '/api'.
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: import.meta.env.VITE_API_URL || '/api',
   headers: { 'Content-Type': 'application/json' },
 });
 
-api.interceptors.request.use(config => {
+api.interceptors.request.use((config) => {
+// ... el resto de tus interceptores se quedan exactamente igual
   const token = localStorage.getItem('taskflow_token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
